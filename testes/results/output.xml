@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.1 (Python 3.11.1 on win32)" generated="20260429 21:15:37.693" rpa="false" schemaversion="3">
+<suite id="s1" name="Run" source="C:\tcc\projeto-facul_terceira_entrega\projeto-facul-master\testes\run">
+<suite id="s1-s1" name="Cadastro Paciente" source="C:\tcc\projeto-facul_terceira_entrega\projeto-facul-master\testes\run\cadastro_paciente.robot">
+<kw name="Abrir Sessao Do Sistemas" library="common" type="SETUP">
+<if>
+<branch type="IF" condition="${INICIAR_SERVICOS}">
+<kw name="Iniciando serviços" library="config_cadastro_paciente">
+<status status="NOT RUN" starttime="20260429 21:15:39.523" endtime="20260429 21:15:39.523"/>
+</kw>
+<status status="NOT RUN" starttime="20260429 21:15:39.523" endtime="20260429 21:15:39.523"/>
+</branch>
+<status status="PASS" starttime="20260429 21:15:39.523" endtime="20260429 21:15:39.523"/>
+</if>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<arg>options=add_argument("--log-level=3")</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20260429 21:15:39.523" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5000'.</msg>
+<status status="PASS" starttime="20260429 21:15:39.523" endtime="20260429 21:15:44.538"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20260429 21:15:44.538" endtime="20260429 21:15:44.606"/>
+</kw>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<arg>window.focus();</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<msg timestamp="20260429 21:15:44.608" level="INFO">Executing JavaScript:
+window.focus();
+Without any arguments.</msg>
+<status status="PASS" starttime="20260429 21:15:44.607" endtime="20260429 21:15:44.619"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:15:49.620" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:15:44.620" endtime="20260429 21:15:49.620"/>
+</kw>
+<kw name="Set Selenium Timeout" library="SeleniumLibrary">
+<arg>10 seconds</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" starttime="20260429 21:15:49.620" endtime="20260429 21:15:49.620"/>
+</kw>
+<status status="PASS" starttime="20260429 21:15:39.523" endtime="20260429 21:15:49.620"/>
+</kw>
+<test id="s1-s1-t1" name="Cenario de Teste 01: Cadastro de clientes" line="14">
+<kw name="Dado que a aplicação esta funcional" library="page_cadastro_paciente">
+<kw name="Log To Console" library="BuiltIn">
+<arg>Abrindo navegador</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:15:49.620" endtime="20260429 21:15:49.620"/>
+</kw>
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>Consulta.com</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20260429 21:15:49.651" level="INFO">Current page contains text 'Consulta.com'.</msg>
+<status status="PASS" starttime="20260429 21:15:49.620" endtime="20260429 21:15:49.651"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Pagina web encontrada com sucesso!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:15:49.651" endtime="20260429 21:15:49.651"/>
+</kw>
+<status status="PASS" starttime="20260429 21:15:49.620" endtime="20260429 21:15:49.651"/>
+</kw>
+<kw name="Quando clico no botao cadastro" library="page_cadastro_paciente">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${cadastro}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:49.651" endtime="20260429 21:15:49.683"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${cadastro}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:49.683" level="INFO">Clicking element '(//a[normalize-space()='Cadastro'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:49.683" endtime="20260429 21:15:51.052"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:15:56.054" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:15:51.053" endtime="20260429 21:15:56.054"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Acesso a pagina de cadastro efetuada com sucesso!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:15:56.054" endtime="20260429 21:15:56.054"/>
+</kw>
+<status status="PASS" starttime="20260429 21:15:49.651" endtime="20260429 21:15:56.054"/>
+</kw>
+<kw name="Então faço o preenchimento do cadastro" library="page_cadastro_paciente">
+<kw name="First Name" library="FakerLibrary">
+<var>${NOME_FAKE}</var>
+<msg timestamp="20260429 21:15:56.054" level="INFO">${NOME_FAKE} = Emanuella</msg>
+<status status="PASS" starttime="20260429 21:15:56.054" endtime="20260429 21:15:56.054"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${nome}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:56.054" endtime="20260429 21:15:56.101"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${nome}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.101" level="INFO">Clicking element '(//input[@id='nome'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.101" endtime="20260429 21:15:56.214"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${nome}</arg>
+<arg>${NOME_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.216" level="INFO">Typing text 'Emanuella' into text field '(//input[@id='nome'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.215" endtime="20260429 21:15:56.280"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Nome gerado: ${NOME_FAKE}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:15:56.280" endtime="20260429 21:15:56.281"/>
+</kw>
+<kw name="Last Name" library="FakerLibrary">
+<var>${SOBRENOME_PARTE1}</var>
+<msg timestamp="20260429 21:15:56.281" level="INFO">${SOBRENOME_PARTE1} = Castro</msg>
+<status status="PASS" starttime="20260429 21:15:56.281" endtime="20260429 21:15:56.281"/>
+</kw>
+<kw name="Last Name" library="FakerLibrary">
+<var>${SOBRENOME_PARTE2}</var>
+<msg timestamp="20260429 21:15:56.281" level="INFO">${SOBRENOME_PARTE2} = Vasconcelos</msg>
+<status status="PASS" starttime="20260429 21:15:56.281" endtime="20260429 21:15:56.281"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${SOBRENOME_FAKE}</var>
+<arg>${SOBRENOME_PARTE1} ${SOBRENOME_PARTE2}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:15:56.282" level="INFO">${SOBRENOME_FAKE} = Castro Vasconcelos</msg>
+<status status="PASS" starttime="20260429 21:15:56.281" endtime="20260429 21:15:56.282"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${sobrenome}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:56.282" endtime="20260429 21:15:56.300"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${sobrenome}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.301" level="INFO">Clicking element '(//input[@id='sobrenome'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.300" endtime="20260429 21:15:56.348"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${sobrenome}</arg>
+<arg>${SOBRENOME_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.349" level="INFO">Typing text 'Castro Vasconcelos' into text field '(//input[@id='sobrenome'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.348" endtime="20260429 21:15:56.402"/>
+</kw>
+<kw name="Cpf" library="FakerLibrary">
+<var>${CPF_FAKE}</var>
+<msg timestamp="20260429 21:15:56.402" level="INFO">${CPF_FAKE} = 753.619.082-40</msg>
+<status status="PASS" starttime="20260429 21:15:56.402" endtime="20260429 21:15:56.402"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${cpf}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:56.403" endtime="20260429 21:15:56.420"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${cpf}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.421" level="INFO">Clicking element '(//input[@id='cpf'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.421" endtime="20260429 21:15:56.471"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${cpf}</arg>
+<arg>${CPF_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.472" level="INFO">Typing text '753.619.082-40' into text field '(//input[@id='cpf'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.471" endtime="20260429 21:15:56.529"/>
+</kw>
+<kw name="Email" library="FakerLibrary">
+<var>${EMAIL_FAKE}</var>
+<msg timestamp="20260429 21:15:56.529" level="INFO">${EMAIL_FAKE} = azevedocamila@example.com</msg>
+<status status="PASS" starttime="20260429 21:15:56.529" endtime="20260429 21:15:56.529"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${email}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:56.529" endtime="20260429 21:15:56.547"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${email}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.547" level="INFO">Clicking element '(//input[@id='email'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.547" endtime="20260429 21:15:56.596"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${email}</arg>
+<arg>${EMAIL_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.597" level="INFO">Typing text 'azevedocamila@example.com' into text field '(//input[@id='email'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.596" endtime="20260429 21:15:56.702"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>E-mail gerado: ${EMAIL_FAKE}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:15:56.702" endtime="20260429 21:15:56.703"/>
+</kw>
+<kw name="Postcode" library="FakerLibrary">
+<var>${CEP_FAKE}</var>
+<doc>Randomly returns a postcode.
+:param formatted: True to allow formatted postcodes, else False (default True)
+:example formatted: '41224-212' '83992-291' '12324322'
+:example raw: '43920231' '34239530'</doc>
+<msg timestamp="20260429 21:15:56.703" level="INFO">${CEP_FAKE} = 65716-782</msg>
+<status status="PASS" starttime="20260429 21:15:56.703" endtime="20260429 21:15:56.703"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${cep}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:56.703" endtime="20260429 21:15:56.721"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${cep}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.722" level="INFO">Clicking element '(//input[@id='cep'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.721" endtime="20260429 21:15:56.771"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${cep}</arg>
+<arg>${CEP_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.772" level="INFO">Typing text '65716-782' into text field '(//input[@id='cep'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.771" endtime="20260429 21:15:56.824"/>
+</kw>
+<kw name="Building Number" library="FakerLibrary">
+<var>${NUMERO_FAKE}</var>
+<doc>:example: '791'</doc>
+<msg timestamp="20260429 21:15:56.825" level="INFO">${NUMERO_FAKE} = 104</msg>
+<status status="PASS" starttime="20260429 21:15:56.825" endtime="20260429 21:15:56.825"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${numero}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:56.825" endtime="20260429 21:15:56.842"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${numero}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.842" level="INFO">Clicking element '(//input[@id='numero'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.842" endtime="20260429 21:15:56.889"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${numero}</arg>
+<arg>${NUMERO_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.890" level="INFO">Typing text '104' into text field '(//input[@id='numero'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.889" endtime="20260429 21:15:56.938"/>
+</kw>
+<kw name="Street Name" library="FakerLibrary">
+<var>${LOGRADOURO_FAKE}</var>
+<doc>:example: 'Crist Parks'</doc>
+<msg timestamp="20260429 21:15:56.938" level="INFO">${LOGRADOURO_FAKE} = Via de Castro</msg>
+<status status="PASS" starttime="20260429 21:15:56.938" endtime="20260429 21:15:56.938"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logradouro}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:56.938" endtime="20260429 21:15:56.956"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${logradouro}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:56.957" level="INFO">Clicking element '(//input[@id='logradouro'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:56.956" endtime="20260429 21:15:57.004"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${logradouro}</arg>
+<arg>${LOGRADOURO_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:57.005" level="INFO">Typing text 'Via de Castro' into text field '(//input[@id='logradouro'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:57.004" endtime="20260429 21:15:57.056"/>
+</kw>
+<kw name="Bairro" library="FakerLibrary">
+<var>${BAIRRO_FAKE}</var>
+<doc>Randomly returns a bairro (neighborhood) name.
+The names were taken from the city of Belo Horizonte - Minas Gerais
+:example: 'Serra'</doc>
+<msg timestamp="20260429 21:15:57.056" level="INFO">${BAIRRO_FAKE} = Alto Dos Pinheiros</msg>
+<status status="PASS" starttime="20260429 21:15:57.056" endtime="20260429 21:15:57.056"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${bairro}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:57.056" endtime="20260429 21:15:57.079"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${bairro}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:57.080" level="INFO">Clicking element '(//input[@id='bairro'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:57.079" endtime="20260429 21:15:57.125"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${bairro}</arg>
+<arg>${BAIRRO_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:57.127" level="INFO">Typing text 'Alto Dos Pinheiros' into text field '(//input[@id='bairro'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:57.125" endtime="20260429 21:15:57.187"/>
+</kw>
+<kw name="City" library="FakerLibrary">
+<var>${CIDADE_FAKE}</var>
+<doc>:example: 'Sashabury'</doc>
+<msg timestamp="20260429 21:15:57.187" level="INFO">${CIDADE_FAKE} = Lima</msg>
+<status status="PASS" starttime="20260429 21:15:57.187" endtime="20260429 21:15:57.187"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${cidade}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:57.188" endtime="20260429 21:15:57.205"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${cidade}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:57.206" level="INFO">Clicking element '(//input[@id='cidade'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:57.205" endtime="20260429 21:15:57.253"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${cidade}</arg>
+<arg>${CIDADE_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:57.254" level="INFO">Typing text 'Lima' into text field '(//input[@id='cidade'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:57.254" endtime="20260429 21:15:57.301"/>
+</kw>
+<kw name="State Abbr" library="FakerLibrary">
+<var>${ESTADO_FAKE}</var>
+<msg timestamp="20260429 21:15:57.301" level="INFO">${ESTADO_FAKE} = PR</msg>
+<status status="PASS" starttime="20260429 21:15:57.301" endtime="20260429 21:15:57.301"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${estado}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:15:57.301" endtime="20260429 21:15:57.320"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${estado}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:57.321" level="INFO">Clicking element '(//input[@id='estado'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:57.320" endtime="20260429 21:15:57.368"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${estado}</arg>
+<arg>${ESTADO_FAKE}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:15:57.369" level="INFO">Typing text 'PR' into text field '(//input[@id='estado'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:15:57.368" endtime="20260429 21:15:57.415"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:16:02.416" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:15:57.415" endtime="20260429 21:16:02.416"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Cadastro preenchido com sucesso!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:02.416" endtime="20260429 21:16:02.416"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${enviar}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20260429 21:16:02.416" endtime="20260429 21:16:02.431"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${enviar}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:16:02.431" level="INFO">Clicking element '(//button[normalize-space()='enviar'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:16:02.431" endtime="20260429 21:16:02.514"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:16:07.514" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:16:02.514" endtime="20260429 21:16:07.514"/>
+</kw>
+<kw name="Handle Alert" library="SeleniumLibrary">
+<arg>action=ACCEPT</arg>
+<arg>timeout= 5s</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20260429 21:16:07.514" level="INFO">HANDLE::&lt;class 'datetime.timedelta'&gt;::0:00:05</msg>
+<status status="PASS" starttime="20260429 21:16:07.514" endtime="20260429 21:16:07.521"/>
+</kw>
+<status status="PASS" starttime="20260429 21:15:56.054" endtime="20260429 21:16:07.521"/>
+</kw>
+<tag>CT01</tag>
+<status status="PASS" starttime="20260429 21:15:49.620" endtime="20260429 21:16:07.521"/>
+</test>
+<test id="s1-s1-t2" name="Cenario de Teste 02: Agendamento" line="21">
+<kw name="Dado que estou na pagina de agendamento" library="page_agendamento">
+<kw name="Wait Until Page Contains" library="SeleniumLibrary">
+<arg>Agende sua Consulta.</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" starttime="20260429 21:16:07.523" endtime="20260429 21:16:08.822"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:16:13.823" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:16:08.823" endtime="20260429 21:16:13.823"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Cadastro enviado com sucesso!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:13.823" endtime="20260429 21:16:13.823"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:07.523" endtime="20260429 21:16:13.823"/>
+</kw>
+<kw name="Quando escolho uma data para consulta" library="page_agendamento">
+<kw name="Get Current Date" library="DateTime">
+<var>${data_inicio}</var>
+<arg>increment=1 day</arg>
+<arg>result_format=%d%m%Y</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20260429 21:16:13.823" level="INFO">${data_inicio} = 30042026</msg>
+<status status="PASS" starttime="20260429 21:16:13.823" endtime="20260429 21:16:13.823"/>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<var>${data_limite}</var>
+<arg>increment=60 days</arg>
+<arg>result_format=%d%m%Y</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20260429 21:16:13.823" level="INFO">${data_limite} = 28062026</msg>
+<status status="PASS" starttime="20260429 21:16:13.823" endtime="20260429 21:16:13.823"/>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<var>${data_para_input}</var>
+<arg>increment=5 days</arg>
+<arg>result_format=%d%m%Y</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20260429 21:16:13.823" level="INFO">${data_para_input} = 04052026</msg>
+<status status="PASS" starttime="20260429 21:16:13.823" endtime="20260429 21:16:13.823"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${campo_data}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:16:13.823" level="INFO">Clicking element '(//input[@id='data'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:16:13.823" endtime="20260429 21:16:13.922"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${campo_data}</arg>
+<arg>${data_para_input}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20260429 21:16:13.923" level="INFO">Typing text '04052026' into text field '(//input[@id='data'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:16:13.922" endtime="20260429 21:16:13.979"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Data agendada para: ${data_para_input}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:13.979" endtime="20260429 21:16:13.979"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:16:18.980" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:16:13.979" endtime="20260429 21:16:18.980"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:13.823" endtime="20260429 21:16:18.980"/>
+</kw>
+<kw name="Então o agendamento agendamento é finalizado" library="page_agendamento">
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${botao_agendar}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20260429 21:16:18.980" level="INFO">Clicking element '(//button[normalize-space()='Agendar'])[1]'.</msg>
+<status status="PASS" starttime="20260429 21:16:18.980" endtime="20260429 21:16:19.078"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:16:24.078" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:16:19.078" endtime="20260429 21:16:24.078"/>
+</kw>
+<kw name="Handle Alert" library="SeleniumLibrary">
+<arg>action=ACCEPT</arg>
+<arg>timeout= 5s</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20260429 21:16:24.078" level="INFO">HANDLE::&lt;class 'datetime.timedelta'&gt;::0:00:05</msg>
+<status status="PASS" starttime="20260429 21:16:24.078" endtime="20260429 21:16:24.091"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>agendamento finalizado com sucesso!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:24.091" endtime="20260429 21:16:24.092"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:18.980" endtime="20260429 21:16:24.093"/>
+</kw>
+<kw name="E valido se voltou para tela inicial para um novo cadastro e agendamento" library="page_agendamento">
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>Consulta.com</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20260429 21:16:26.136" level="INFO">Current page contains text 'Consulta.com'.</msg>
+<status status="PASS" starttime="20260429 21:16:24.098" endtime="20260429 21:16:26.136"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20260429 21:16:31.138" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20260429 21:16:26.137" endtime="20260429 21:16:31.138"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Pagina web encontrada com sucesso!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:31.138" endtime="20260429 21:16:31.138"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:24.098" endtime="20260429 21:16:31.138"/>
+</kw>
+<tag>CT02</tag>
+<status status="PASS" starttime="20260429 21:16:07.522" endtime="20260429 21:16:31.138"/>
+</test>
+<test id="s1-s1-t3" name="Cenario de Teste 03: Conferindo Banco de Dados pacientes" line="28">
+<kw name="Dado que acesso o banco de dados para pacientes" library="steps_validacao_bd">
+<kw name="Acessndo o banco de dados para pacientes" library="page_bd_cadpacientes">
+<doc>Faz um GET filtrando pelo ID para confirmar a persistência.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>apikey=${SUPABASE_KEY}</arg>
+<arg>Authorization=Bearer ${SUPABASE_KEY}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20260429 21:16:31.138" level="INFO">${headers} = {'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20260429 21:16:31.138" endtime="20260429 21:16:31.138"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>supabase</arg>
+<arg>${URL_SUPABASE_REST}</arg>
+<arg>headers=${headers}</arg>
+<arg>verify=True</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20260429 21:16:31.138" level="INFO">Creating Session using : alias=supabase, url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/, headers={'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20260429 21:16:31.138" endtime="20260429 21:16:31.138"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>supabase</arg>
+<arg>url=${TABELA_PACIENTES}?select=*</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20260429 21:16:31.683" level="INFO">GET Request : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/pacientes?select=* 
+ path_url=/rest/v1/pacientes?select=* 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20260429 21:16:31.683" level="INFO">GET Response : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/pacientes?select=* 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 30 Apr 2026 00:16:06 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Content-Range': '0-21/*', 'CF-Ray': '9f425b15eac8ff94-GIG', 'CF-Cache-Status': 'DYNAMIC', 'Content-Encoding': 'gzip', 'Content-Location': '/pacientes?select=%2A', 'Server': 'cloudflare', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload', 'Vary': 'Accept-Encoding', 'X-Content-Type-Options': 'nosniff', 'content-profile': 'public', 'sb-gateway-version': '1', 'sb-project-ref': 'dpugattsztlslyiudneu', 'sb-request-id': '019ddbbe-29b4-7324-ad6c-90ed5c5e52c4', 'x-envoy-attempt-count': '1', 'x-envoy-upstream-service-time': '15', 'set-cookie': '__cf_bm=m1n6QL7hqVIOzU42fM8sWcxKlpxWS_KGzrQkVf3Iti0-1777508166.0637174-1.0.1.1-2rxDHIbEoREHOaXXMs66SQ2VJVnqoyjI9dZGfVLSjouVESYjCQ0TLuqD_w3ONgiUwGVNIqDEw9eS2UqKkF.dsyDt0gDHvNv_wkUgp3UKFcr_XKkDP9P_faIQ0enKeVN0; HttpOnly; Secure; Path=/; Domain=supabase.co; Expires=Thu, 30 Apr 2026 00:46:06 GMT', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body=[{"id":75,"nome":"Natália","sobrenome":"Nogueira Gonçalves","cpf":"50781463262","email":"luancosta@example.com","cep":"94175419","numero":"7","logradouro":"Vale Davi Luiz Sá","bairro":"Salgado Filho","cidade":"Cardoso","estado":"RN","created_at":"2026-04-09T08:00:23.717446"}, 
+ {"id":76,"nome":"Kaique","sobrenome":"Vasconcelos Moura","cpf":"49658213006","email":"levicirino@example.net","cep":"53435886","numero":"25","logradouro":"Praia Câmara","bairro":"Satelite","cidade":"Costela da Serra","estado":"AC","created_at":"2026-04-09T08:06:39.663524"}, 
+ {"id":77,"nome":"Marcela","sobrenome":"Cavalcante Rezende","cpf":"49023168704","email":"erickpastor@example.org","cep":"18068898","numero":"140","logradouro":"Quadra de Vieira","bairro":"Vila Santa Rosa","cidade":"da Conceição","estado":"RS","created_at":"2026-04-10T01:38:17.650189"}, 
+ {"id":78,"nome":"Vitória","sobrenome":"Aparecida Dias","cpf":"96184570285","email":"da-costaluigi@example.net","cep":"18887656","numero":"90","logradouro":"Colônia Costela","bairro":"Alto Barroca","cidade":"Sousa de Barros","estado":"RR","created_at":"2026-04-10T01:40:09.675368"}, 
+ {"id":79,"nome":"Gabriel","sobrenome":"da Rocha Teixeira","cpf":"73456192061","email":"da-pazvalentina@example.com","cep":"04088231","numero":"55","logradouro":"Residencial Aragão","bairro":"Vitoria","cidade":"Sousa Grande","estado":"RN","created_at":"2026-04-10T01:49:47.302341"}, 
+ {"id":80,"nome":"Luiza","sobrenome":"Pinto Macedo","cpf":"24137508941","email":"julia56@example.org","cep":"10869236","numero":"4","logradouro":"Pátio Melo","bairro":"Diamante","cidade":"Barros","estado":"BA","created_at":"2026-04-10T01:51:23.528808"}, 
+ {"id":81,"nome":"Maria Isis","sobrenome":"Lopes Santos","cpf":"59042781360","email":"aragaocecilia@example.org","cep":"77967346","numero":"73","logradouro":"Largo Lívia Moura","bairro":"Vila Das Oliveiras","cidade":"Macedo das Pedras","estado":"RS","created_at":"2026-04-10T02:16:50.649682"}, 
+ {"id":82,"nome":"Vitor","sobrenome":"Aparecida Lopes","cpf":"49358176237","email":"anna-liz02@example.org","cep":"05394173","numero":"7","logradouro":"Alameda Ian Pires","bairro":"Ouro Minas","cidade":"Rocha da Mata","estado":"DF","created_at":"2026-04-10T03:07:44.046151"}, 
+ {"id":83,"nome":"Mariane","sobrenome":"Lopes Rezende","cpf":"25430186970","email":"msousa@example.com","cep":"56802867","numero":"17","logradouro":"Largo Alexandre da Mata","bairro":"Ernesto Nascimento","cidade":"Abreu de da Cruz","estado":"AC","created_at":"2026-04-10T03:13:43.703894"}, 
+ {"id":84,"nome":"Kirby","sobrenome":"Nintendo","cpf":"12080456016","email":"murilonunes600@gmail.com","cep":"11111111","numero":"11111","logradouro":"SP","bairro":"11111","cidade":"SP","estado":"SP","created_at":"2026-04-25T00:48:08.103706"}, 
+ {"id":85,"nome":"Beatriz","sobrenome":"Oliveira","cpf":"85801651055","email":"teste478@exemplo.com","cep":"01310895","numero":"422","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-26T01:21:21.162581"}, 
+ {"id":86,"nome":"Beatriz","sobrenome":"Oliveira","cpf":"02871200238","email":"teste217@exemplo.com","cep":"01310745","numero":"775","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-26T01:23:56.716964"}, 
+ {"id":87,"nome":"Lucas","sobrenome":"Rodrigues","cpf":"81612525725","email":"donaboleta@gmail.com","cep":"01310170","numero":"653","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-26T02:01:36.475623"}, 
+ {"id":88,"nome":"Ana Clara","sobrenome":"Fernandes Freitas","cpf":"48396217564","email":"gsa@example.org","cep":"56768929","numero":"9","logradouro":"Quadra Vasconcelos","bairro":"Comiteco","cidade":"Melo de Vasconcelos","estado":"AL","created_at":"2026-04-29T03:25:08.369367"}, 
+ {"id":89,"nome":"Igor","sobrenome":"Sales Araújo","cpf":"14675380271","email":"zcunha@example.com","cep":"44883725","numero":"53","logradouro":"Vale de Leão","bairro":"Confisco","cidade":"Vasconcelos Paulista","estado":"PB","created_at":"2026-04-29T03:27:45.637316"}, 
+ {"id":90,"nome":"Lucas","sobrenome":"Souza","cpf":"42274765774","email":"teste562@exemplo.com","cep":"01310883","numero":"924","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-29T03:32:41.309226"}, 
+ {"id":91,"nome":"Luna","sobrenome":"da Cruz Camargo","cpf":"79304681278","email":"juliana53@example.com","cep":"32829456","numero":"34","logradouro":"Loteamento Teixeira","bairro":"Glória","cidade":"Rezende de Goiás","estado":"BA","created_at":"2026-04-29T03:47:58.703209"}, 
+ {"id":92,"nome":"Eloah","sobrenome":"da Mata da Cruz","cpf":"67453091225","email":"joao-vitorcamargo@example.org","cep":"60626864","numero":"69","logradouro":"Via Sá","bairro":"São Jorge 2ª Seção","cidade":"Pacheco Verde","estado":"RO","created_at":"2026-04-29T23:59:31.631429"}, 
+ {"id":93,"nome":"Marcelo","sobrenome":"Lima da Cunha","cpf":"92015378677","email":"smoura@example.org","cep":"34397877","numero":"90","logradouro":"Praia Manuela Nascimento","bairro":"Novo Tupi","cidade":"Pereira da Prata","estado":"MG","created_at":"2026-04-30T00:02:28.086475"}, 
+ {"id":94,"nome":"João","sobrenome":"Silva","cpf":"85646583640","email":"teste706@exemplo.com","cep":"01310365","numero":"904","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-30T00:05:50.419363"}, 
+ {"id":95,"nome":"Carla","sobrenome":"Souza","cpf":"27330406007","email":"teste263@exemplo.com","cep":"01310375","numero":"900","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-30T00:06:23.909198"}, 
+ {"id":96,"nome":"Emanuella","sobrenome":"Castro Vasconcelos","cpf":"75361908240","email":"azevedocamila@example.com","cep":"65716782","numero":"104","logradouro":"Via de Castro","bairro":"Alto Dos Pinheiros","cidade":"Lima","estado":"PR","created_at":"2026-04-30T00:15:38.497486"}] 
+ </msg>
+<msg timestamp="20260429 21:16:31.683" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20260429 21:16:31.138" endtime="20260429 21:16:31.683"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.683"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${total_registros}</var>
+<arg>${response.json()}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20260429 21:16:31.683" level="INFO">Length is 22</msg>
+<msg timestamp="20260429 21:16:31.683" level="INFO">${total_registros} = 22</msg>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.683"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>${total_registros} &gt; 0</arg>
+<arg>Nenhum paciente encontrado no banco de dados!</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.683"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:31.138" endtime="20260429 21:16:31.683"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:31.138" endtime="20260429 21:16:31.683"/>
+</kw>
+<kw name="Então confirmo se as informações para pacientes foram cadastradas corretamente" library="steps_validacao_bd">
+<kw name="Dado que acesso o banco de dados para pacientes" library="steps_validacao_bd">
+<kw name="Acessndo o banco de dados para pacientes" library="page_bd_cadpacientes">
+<doc>Faz um GET filtrando pelo ID para confirmar a persistência.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>apikey=${SUPABASE_KEY}</arg>
+<arg>Authorization=Bearer ${SUPABASE_KEY}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20260429 21:16:31.683" level="INFO">${headers} = {'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.683"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>supabase</arg>
+<arg>${URL_SUPABASE_REST}</arg>
+<arg>headers=${headers}</arg>
+<arg>verify=True</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20260429 21:16:31.683" level="INFO">Creating Session using : alias=supabase, url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/, headers={'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.683"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>supabase</arg>
+<arg>url=${TABELA_PACIENTES}?select=*</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20260429 21:16:31.940" level="INFO">GET Request : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/pacientes?select=* 
+ path_url=/rest/v1/pacientes?select=* 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20260429 21:16:31.940" level="INFO">GET Response : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/pacientes?select=* 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 30 Apr 2026 00:16:06 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Content-Range': '0-21/*', 'CF-Ray': '9f425b186f6282eb-GIG', 'CF-Cache-Status': 'DYNAMIC', 'Content-Encoding': 'gzip', 'Content-Location': '/pacientes?select=%2A', 'Server': 'cloudflare', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload', 'Vary': 'Accept-Encoding', 'X-Content-Type-Options': 'nosniff', 'content-profile': 'public', 'sb-gateway-version': '1', 'sb-project-ref': 'dpugattsztlslyiudneu', 'sb-request-id': '019ddbbe-2b4a-74de-bdda-887043c2386b', 'x-envoy-attempt-count': '1', 'x-envoy-upstream-service-time': '20', 'set-cookie': '__cf_bm=TayZVEVq2sqKU4Piqnu0E2_GQAUr26kF5YVoni4oZzE-1777508166.467899-1.0.1.1-UhGdIK1g1A1DJYI_BaFkXgePTIWGHsGdmATkDC_noGI0CHhKUKjjFBRVpveUkX1PThBx4di1F83S22y7vIM2Ne8Iv0xewVB..DryK4dtMLwnarXiLRVRU0fMoSB7zjRH; HttpOnly; Secure; Path=/; Domain=supabase.co; Expires=Thu, 30 Apr 2026 00:46:06 GMT', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body=[{"id":75,"nome":"Natália","sobrenome":"Nogueira Gonçalves","cpf":"50781463262","email":"luancosta@example.com","cep":"94175419","numero":"7","logradouro":"Vale Davi Luiz Sá","bairro":"Salgado Filho","cidade":"Cardoso","estado":"RN","created_at":"2026-04-09T08:00:23.717446"}, 
+ {"id":76,"nome":"Kaique","sobrenome":"Vasconcelos Moura","cpf":"49658213006","email":"levicirino@example.net","cep":"53435886","numero":"25","logradouro":"Praia Câmara","bairro":"Satelite","cidade":"Costela da Serra","estado":"AC","created_at":"2026-04-09T08:06:39.663524"}, 
+ {"id":77,"nome":"Marcela","sobrenome":"Cavalcante Rezende","cpf":"49023168704","email":"erickpastor@example.org","cep":"18068898","numero":"140","logradouro":"Quadra de Vieira","bairro":"Vila Santa Rosa","cidade":"da Conceição","estado":"RS","created_at":"2026-04-10T01:38:17.650189"}, 
+ {"id":78,"nome":"Vitória","sobrenome":"Aparecida Dias","cpf":"96184570285","email":"da-costaluigi@example.net","cep":"18887656","numero":"90","logradouro":"Colônia Costela","bairro":"Alto Barroca","cidade":"Sousa de Barros","estado":"RR","created_at":"2026-04-10T01:40:09.675368"}, 
+ {"id":79,"nome":"Gabriel","sobrenome":"da Rocha Teixeira","cpf":"73456192061","email":"da-pazvalentina@example.com","cep":"04088231","numero":"55","logradouro":"Residencial Aragão","bairro":"Vitoria","cidade":"Sousa Grande","estado":"RN","created_at":"2026-04-10T01:49:47.302341"}, 
+ {"id":80,"nome":"Luiza","sobrenome":"Pinto Macedo","cpf":"24137508941","email":"julia56@example.org","cep":"10869236","numero":"4","logradouro":"Pátio Melo","bairro":"Diamante","cidade":"Barros","estado":"BA","created_at":"2026-04-10T01:51:23.528808"}, 
+ {"id":81,"nome":"Maria Isis","sobrenome":"Lopes Santos","cpf":"59042781360","email":"aragaocecilia@example.org","cep":"77967346","numero":"73","logradouro":"Largo Lívia Moura","bairro":"Vila Das Oliveiras","cidade":"Macedo das Pedras","estado":"RS","created_at":"2026-04-10T02:16:50.649682"}, 
+ {"id":82,"nome":"Vitor","sobrenome":"Aparecida Lopes","cpf":"49358176237","email":"anna-liz02@example.org","cep":"05394173","numero":"7","logradouro":"Alameda Ian Pires","bairro":"Ouro Minas","cidade":"Rocha da Mata","estado":"DF","created_at":"2026-04-10T03:07:44.046151"}, 
+ {"id":83,"nome":"Mariane","sobrenome":"Lopes Rezende","cpf":"25430186970","email":"msousa@example.com","cep":"56802867","numero":"17","logradouro":"Largo Alexandre da Mata","bairro":"Ernesto Nascimento","cidade":"Abreu de da Cruz","estado":"AC","created_at":"2026-04-10T03:13:43.703894"}, 
+ {"id":84,"nome":"Kirby","sobrenome":"Nintendo","cpf":"12080456016","email":"murilonunes600@gmail.com","cep":"11111111","numero":"11111","logradouro":"SP","bairro":"11111","cidade":"SP","estado":"SP","created_at":"2026-04-25T00:48:08.103706"}, 
+ {"id":85,"nome":"Beatriz","sobrenome":"Oliveira","cpf":"85801651055","email":"teste478@exemplo.com","cep":"01310895","numero":"422","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-26T01:21:21.162581"}, 
+ {"id":86,"nome":"Beatriz","sobrenome":"Oliveira","cpf":"02871200238","email":"teste217@exemplo.com","cep":"01310745","numero":"775","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-26T01:23:56.716964"}, 
+ {"id":87,"nome":"Lucas","sobrenome":"Rodrigues","cpf":"81612525725","email":"donaboleta@gmail.com","cep":"01310170","numero":"653","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-26T02:01:36.475623"}, 
+ {"id":88,"nome":"Ana Clara","sobrenome":"Fernandes Freitas","cpf":"48396217564","email":"gsa@example.org","cep":"56768929","numero":"9","logradouro":"Quadra Vasconcelos","bairro":"Comiteco","cidade":"Melo de Vasconcelos","estado":"AL","created_at":"2026-04-29T03:25:08.369367"}, 
+ {"id":89,"nome":"Igor","sobrenome":"Sales Araújo","cpf":"14675380271","email":"zcunha@example.com","cep":"44883725","numero":"53","logradouro":"Vale de Leão","bairro":"Confisco","cidade":"Vasconcelos Paulista","estado":"PB","created_at":"2026-04-29T03:27:45.637316"}, 
+ {"id":90,"nome":"Lucas","sobrenome":"Souza","cpf":"42274765774","email":"teste562@exemplo.com","cep":"01310883","numero":"924","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-29T03:32:41.309226"}, 
+ {"id":91,"nome":"Luna","sobrenome":"da Cruz Camargo","cpf":"79304681278","email":"juliana53@example.com","cep":"32829456","numero":"34","logradouro":"Loteamento Teixeira","bairro":"Glória","cidade":"Rezende de Goiás","estado":"BA","created_at":"2026-04-29T03:47:58.703209"}, 
+ {"id":92,"nome":"Eloah","sobrenome":"da Mata da Cruz","cpf":"67453091225","email":"joao-vitorcamargo@example.org","cep":"60626864","numero":"69","logradouro":"Via Sá","bairro":"São Jorge 2ª Seção","cidade":"Pacheco Verde","estado":"RO","created_at":"2026-04-29T23:59:31.631429"}, 
+ {"id":93,"nome":"Marcelo","sobrenome":"Lima da Cunha","cpf":"92015378677","email":"smoura@example.org","cep":"34397877","numero":"90","logradouro":"Praia Manuela Nascimento","bairro":"Novo Tupi","cidade":"Pereira da Prata","estado":"MG","created_at":"2026-04-30T00:02:28.086475"}, 
+ {"id":94,"nome":"João","sobrenome":"Silva","cpf":"85646583640","email":"teste706@exemplo.com","cep":"01310365","numero":"904","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-30T00:05:50.419363"}, 
+ {"id":95,"nome":"Carla","sobrenome":"Souza","cpf":"27330406007","email":"teste263@exemplo.com","cep":"01310375","numero":"900","logradouro":"Avenida Paulista","bairro":"Bela Vista","cidade":"São Paulo","estado":"SP","created_at":"2026-04-30T00:06:23.909198"}, 
+ {"id":96,"nome":"Emanuella","sobrenome":"Castro Vasconcelos","cpf":"75361908240","email":"azevedocamila@example.com","cep":"65716782","numero":"104","logradouro":"Via de Castro","bairro":"Alto Dos Pinheiros","cidade":"Lima","estado":"PR","created_at":"2026-04-30T00:15:38.497486"}] 
+ </msg>
+<msg timestamp="20260429 21:16:31.940" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.940"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:31.955"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${total_registros}</var>
+<arg>${response.json()}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20260429 21:16:31.955" level="INFO">Length is 22</msg>
+<msg timestamp="20260429 21:16:31.955" level="INFO">${total_registros} = 22</msg>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:31.955"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>${total_registros} &gt; 0</arg>
+<arg>Nenhum paciente encontrado no banco de dados!</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:31.955"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.955"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.955"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:31.683" endtime="20260429 21:16:31.955"/>
+</kw>
+<kw name="E confirmo se as informações para agendamento foram cadastradas corretamente" library="steps_validacao_bd">
+<kw name="Validar Relacionamento Paciente E Agendamento" library="page_bd_cadpacientes">
+<doc>Busca o último paciente cadastrado, depois valida se existe
+um agendamento vinculado ao paciente_id correspondente.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<arg>\n=== INICIANDO VALIDAÇÃO DE RELACIONAMENTO ===\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:31.955"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>apikey=${SUPABASE_KEY}</arg>
+<arg>Authorization=Bearer ${SUPABASE_KEY}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20260429 21:16:31.955" level="INFO">${headers} = {'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:31.955"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>supabase_val</arg>
+<arg>${URL_SUPABASE_REST}</arg>
+<arg>headers=${headers}</arg>
+<arg>verify=True</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20260429 21:16:31.955" level="INFO">Creating Session using : alias=supabase_val, url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/, headers={'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:31.955"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>\nBuscando último paciente para conferência final...</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:32.109"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp_paciente}</var>
+<arg>supabase_val</arg>
+<arg>url=/${TABELA_PACIENTES}?select=id,nome,cpf&amp;order=id.desc&amp;limit=1</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20260429 21:16:32.362" level="INFO">GET Request : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/pacientes?select=id,nome,cpf&amp;order=id.desc&amp;limit=1 
+ path_url=/rest/v1/pacientes?select=id,nome,cpf&amp;order=id.desc&amp;limit=1 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20260429 21:16:32.362" level="INFO">GET Response : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/pacientes?select=id,nome,cpf&amp;order=id.desc&amp;limit=1 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 30 Apr 2026 00:16:07 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Content-Range': '0-0/*', 'CF-Ray': '9f425b1afed15796-GIG', 'CF-Cache-Status': 'DYNAMIC', 'Content-Location': '/pacientes?limit=1&amp;order=id.desc&amp;select=id%2Cnome%2Ccpf', 'Server': 'cloudflare', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload', 'X-Content-Type-Options': 'nosniff', 'content-profile': 'public', 'sb-gateway-version': '1', 'sb-project-ref': 'dpugattsztlslyiudneu', 'sb-request-id': '019ddbbe-2ce1-7afa-9ac1-16c7bf3f70f9', 'x-envoy-attempt-count': '1', 'x-envoy-upstream-service-time': '45', 'set-cookie': '__cf_bm=VlUdNsjh4BD821xDDmlDNyLj.zK_M8FNj0GKrzeyOaQ-1777508166.877419-1.0.1.1-MIFwvUnKF7oeP7Qk3a3o8fp1UGqKQc_ZbW4HIh3ieN_.7rQRlem.9yQmp5tmvBZ3ZFlEoyR40y5fEo.BRsRmwgk0RoNggZUQo7x8csh0fN5Jqwm5.4jEdFMpNfM2TjYb; HttpOnly; Secure; Path=/; Domain=supabase.co; Expires=Thu, 30 Apr 2026 00:46:07 GMT', 'Content-Encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body=[{"id":96,"nome":"Emanuella","cpf":"75361908240"}] 
+ </msg>
+<msg timestamp="20260429 21:16:32.362" level="INFO">${resp_paciente} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20260429 21:16:32.109" endtime="20260429 21:16:32.362"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${resp_paciente}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20260429 21:16:32.362" endtime="20260429 21:16:32.362"/>
+</kw>
+<kw name="Should Not Be Empty" library="BuiltIn">
+<arg>${resp_paciente.json()}</arg>
+<arg>Nenhum paciente encontrado para validar o relacionamento.</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<msg timestamp="20260429 21:16:32.362" level="INFO">Length is 1</msg>
+<status status="PASS" starttime="20260429 21:16:32.362" endtime="20260429 21:16:32.362"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${paciente}</var>
+<arg>${resp_paciente.json()[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.362" level="INFO">${paciente} = {'id': 96, 'nome': 'Emanuella', 'cpf': '75361908240'}</msg>
+<status status="PASS" starttime="20260429 21:16:32.362" endtime="20260429 21:16:32.362"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${id_paciente}</var>
+<arg>${paciente['id']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.377" level="INFO">${id_paciente} = 96</msg>
+<status status="PASS" starttime="20260429 21:16:32.362" endtime="20260429 21:16:32.377"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${nome_paciente}</var>
+<arg>${paciente['nome']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.377" level="INFO">${nome_paciente} = Emanuella</msg>
+<status status="PASS" starttime="20260429 21:16:32.377" endtime="20260429 21:16:32.377"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${cpf_paciente}</var>
+<arg>${paciente['cpf']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.381" level="INFO">${cpf_paciente} = 75361908240</msg>
+<status status="PASS" starttime="20260429 21:16:32.377" endtime="20260429 21:16:32.381"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>\n[Paciente encontrado] ID: ${id_paciente} | Nome: ${nome_paciente} | CPF: ${cpf_paciente}\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.381" endtime="20260429 21:16:32.381"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Buscando agendamento vinculado ao ID ${id_paciente}...</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.381" endtime="20260429 21:16:32.381"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp_agendamento}</var>
+<arg>supabase_val</arg>
+<arg>url=/${TABELA_AGENDAMENTOS}?select=id,id_paciente,data_consulta&amp;id_paciente=eq.${id_paciente}&amp;order=id.desc&amp;limit=1</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20260429 21:16:32.553" level="INFO">GET Request : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/agendamentos?select=id,id_paciente,data_consulta&amp;id_paciente=eq.96&amp;order=id.desc&amp;limit=1 
+ path_url=/rest/v1/agendamentos?select=id,id_paciente,data_consulta&amp;id_paciente=eq.96&amp;order=id.desc&amp;limit=1 
+ headers={'User-Agent': 'python-requests/2.33.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'apikey': 'sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Authorization': 'Bearer sb_publishable_uSrDS1XXeyM6Gdn_Wlfb2g_zVjONOcx', 'Content-Type': 'application/json', 'Cookie': '__cf_bm=VlUdNsjh4BD821xDDmlDNyLj.zK_M8FNj0GKrzeyOaQ-1777508166.877419-1.0.1.1-MIFwvUnKF7oeP7Qk3a3o8fp1UGqKQc_ZbW4HIh3ieN_.7rQRlem.9yQmp5tmvBZ3ZFlEoyR40y5fEo.BRsRmwgk0RoNggZUQo7x8csh0fN5Jqwm5.4jEdFMpNfM2TjYb'} 
+ body=None 
+ </msg>
+<msg timestamp="20260429 21:16:32.568" level="INFO">GET Response : url=https://dpugattsztlslyiudneu.supabase.co/rest/v1/agendamentos?select=id,id_paciente,data_consulta&amp;id_paciente=eq.96&amp;order=id.desc&amp;limit=1 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 30 Apr 2026 00:16:07 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Content-Range': '0-0/*', 'CF-Ray': '9f425b1c4a9b5796-GIG', 'CF-Cache-Status': 'DYNAMIC', 'Content-Location': '/agendamentos?id_paciente=eq.96&amp;limit=1&amp;order=id.desc&amp;select=id%2Cid_paciente%2Cdata_consulta', 'Server': 'cloudflare', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload', 'X-Content-Type-Options': 'nosniff', 'content-profile': 'public', 'sb-gateway-version': '1', 'sb-project-ref': 'dpugattsztlslyiudneu', 'sb-request-id': '019ddbbe-2db4-7812-8bc3-ac502447a110', 'x-envoy-attempt-count': '1', 'x-envoy-upstream-service-time': '29', 'Content-Encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body=[{"id":52,"id_paciente":96,"data_consulta":"2026-05-04"}] 
+ </msg>
+<msg timestamp="20260429 21:16:32.568" level="INFO">${resp_agendamento} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20260429 21:16:32.381" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${resp_agendamento}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${total}</var>
+<arg>${resp_agendamento.json()}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20260429 21:16:32.568" level="INFO">Length is 1</msg>
+<msg timestamp="20260429 21:16:32.568" level="INFO">${total} = 1</msg>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>${total} &gt; 0</arg>
+<arg>FALHA: Nenhum agendamento encontrado para id_paciente=${id_paciente}!</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${agendamento}</var>
+<arg>${resp_agendamento.json()[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.568" level="INFO">${agendamento} = {'id': 52, 'id_paciente': 96, 'data_consulta': '2026-05-04'}</msg>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${id_ag}</var>
+<arg>${agendamento['id']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.568" level="INFO">${id_ag} = 52</msg>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${paciente_id_ag}</var>
+<arg>${agendamento['id_paciente']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.568" level="INFO">${paciente_id_ag} = 96</msg>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${data_ag}</var>
+<arg>${agendamento['data_consulta']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260429 21:16:32.568" level="INFO">${data_ag} = 2026-05-04</msg>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${paciente_id_ag}</arg>
+<arg>${id_paciente}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>\n==========================================================</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.568"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>✅ CONFERÊNCIA DE DADOS REALIZADA COM SUCESSO</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.568" endtime="20260429 21:16:32.898"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>----------------------------------------------------------</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.898" endtime="20260429 21:16:32.898"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>PACIENTE: ${nome_paciente} (ID: ${id_paciente})</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.898" endtime="20260429 21:16:32.898"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>AGENDAMENTO: ID ${id_ag} para a data ${data_ag}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.898" endtime="20260429 21:16:32.898"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>==========================================================\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:32.898" endtime="20260429 21:16:32.898"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:32.898"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:31.955" endtime="20260429 21:16:32.898"/>
+</kw>
+<tag>CT03</tag>
+<status status="PASS" starttime="20260429 21:16:31.138" endtime="20260429 21:16:32.898"/>
+</test>
+<kw name="Fechar Sessao Do Sistema" library="common" type="TEARDOWN">
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20260429 21:16:32.898" endtime="20260429 21:16:35.092"/>
+</kw>
+<if>
+<branch type="IF" condition="${ENCERRAR_SERVICOS_NO_ROBOT}">
+<kw name="Log To Console" library="BuiltIn">
+<arg>\nEncerrando serviços Python...</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20260429 21:16:35.092" endtime="20260429 21:16:35.092"/>
+</kw>
+<kw name="Run Process" library="Process">
+<arg>taskkill /F /IM python.exe /T</arg>
+<arg>shell=True</arg>
+<arg>stdout=${null}</arg>
+<arg>stderr=${null}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20260429 21:16:35.092" endtime="20260429 21:16:35.092"/>
+</kw>
+<status status="NOT RUN" starttime="20260429 21:16:35.092" endtime="20260429 21:16:35.092"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log To Console" library="BuiltIn">
+<arg>\nSessão encerrada. Limpeza de serviços será feita pelo script externo.</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20260429 21:16:35.092" endtime="20260429 21:16:35.092"/>
+</kw>
+<status status="PASS" starttime="20260429 21:16:35.092" endtime="20260429 21:16:35.092"/>
+</branch>
+<status status="PASS" starttime="20260429 21:16:35.092" endtime="20260429 21:16:35.092"/>
+</if>
+<status status="PASS" starttime="20260429 21:16:32.898" endtime="20260429 21:16:35.092"/>
+</kw>
+<status status="PASS" starttime="20260429 21:15:37.740" endtime="20260429 21:16:35.092"/>
+</suite>
+<status status="PASS" starttime="20260429 21:15:37.709" endtime="20260429 21:16:35.092"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">CT01</stat>
+<stat pass="1" fail="0" skip="0">CT02</stat>
+<stat pass="1" fail="0" skip="0">CT03</stat>
+</tag>
+<suite>
+<stat pass="3" fail="0" skip="0" id="s1" name="Run">Run</stat>
+<stat pass="3" fail="0" skip="0" id="s1-s1" name="Cadastro Paciente">Run.Cadastro Paciente</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Virtual | consulta.com</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        #jitsi-container { height: 100vh; width: 100%; }
+        iframe { border: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="jitsi-container"></div>
+    <script>
+        // Obtém o nome da sala da URL (ex: consulta.html?sala=consulta-123)
+        const urlParams = new URLSearchParams(window.location.search);
+        const sala = urlParams.get('sala') || 'sala-padrao';
+
+        // Cria o iframe do Jitsi Meet
+        const container = document.getElementById('jitsi-container');
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://meet.jit.si/${sala}`;
+        iframe.allow = 'camera; microphone; fullscreen; display-capture; autoplay';
+        container.appendChild(iframe);
+    </script>
+</body>
+</html>

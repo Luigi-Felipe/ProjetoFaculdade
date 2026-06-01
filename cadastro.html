@@ -23,6 +23,7 @@
         <ul class="header-menu font-1-m cor-0">
           <li><a href="./index.html">Home</a></li>
           <li><a href="./cadastro.html">Cadastro</a></li>
+          <li><a href="./login-paciente.html">Login Paciente</a></li>
           <li><a href="./agendamento.html">Agendamento</a></li>
           <li><a href="./medico.html">Login-Médico</a></li>          
         </ul>
@@ -159,6 +160,18 @@
             // Exibe mensagem de erro retornada pelo backend
             alert(`Erro: ${result.erro || 'Erro desconhecido'}`);
             return;
+          }
+
+          // Faz login automático com CPF e e-mail informados
+          try {
+            await fetch(`${API_BASE_URL}/api/pacientes/login`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({ cpf: dados.cpf, email: dados.email })
+            });
+          } catch (e) {
+            console.warn('Login automático falhou, mas o cadastro foi concluído');
           }
 
           alert('Cadastro realizado com sucesso!');

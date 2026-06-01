@@ -23,6 +23,7 @@
         <ul class="header-menu font-1-m cor-0">
           <li><a href="./index.html">Home</a></li>
           <li><a href="./cadastro.html">Cadastro</a></li>
+          <li><a href="./login-paciente.html">Login Paciente</a></li>
           <li><a href="./agendamento.html">Agendamento</a></li>
           <li><a href="./medico.html">Login-Médico</a></li>          
         </ul>
@@ -80,23 +81,43 @@
   </footer>
 
   <script>
-    // Configuração da URL base da API (backend Flask)
-    const API_BASE_URL = 'http://localhost:5000'; // Altere se o backend estiver em outro endereço
+    const API_BASE_URL = 'http://localhost:5000';
 
-    // Obtém o ID do paciente da URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const pacienteId = urlParams.get('paciente_id');
+    async function getPacienteId() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let pacienteId = urlParams.get('paciente_id');
+      if (pacienteId) return pacienteId;
 
-    const form = document.querySelector('.agendamento form');
+      // Tenta obter da sessão
+      try {
+        const resp = await fetch(`${API_BASE_URL}/api/pacientes/sessao`, {
+          credentials: 'include'
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          return data.id;
+        }
+      } catch (e) {
+        console.log('Sessão não encontrada');
+      }
+      return null;
+    }
 
-    if (form) {
+    (async () => {
+      const pacienteId = await getPacienteId();
+      const form = document.querySelector('.agendamento form');
+
+      if (!form) {
+        console.error('Formulário não encontrado!');
+        return;
+      }
+
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        // Verifica se o paciente foi identificado
         if (!pacienteId) {
-          alert('Paciente não identificado. Faça o cadastro primeiro.');
-          window.location.href = '/cadastro.html';
+          alert('Paciente não identificado. Faça login ou cadastro primeiro.');
+          window.location.href = '/login-paciente.html';
           return;
         }
 
@@ -108,9 +129,8 @@
           return;
         }
 
-        // Monta o objeto no formato esperado pelo backend
         const agendamento = {
-          paciente_id: pacienteId,  // backend espera "paciente_id" (com _)
+          paciente_id: pacienteId,
           data_consulta: dataConsulta
         };
 
@@ -130,16 +150,28 @@
             return;
           }
 
-          alert('Consulta agendada com sucesso!');
-          window.location.href = '/index.html';
+          // Sucesso: tenta obter o link da sala
+          const agendamentoId = result.id;
+          try {
+            const salaResponse = await fetch(`${API_BASE_URL}/api/agendamentos/${agendamentoId}/sala`);
+            if (salaResponse.ok) {
+              const salaData = await salaResponse.json();
+              window.location.href = `/consulta.html?sala=${encodeURIComponent(salaData.sala)}`;
+            } else {
+              alert('Consulta agendada, mas não foi possível abrir a sala virtual. Tente acessar mais tarde.');
+              window.location.href = '/index.html';
+            }
+          } catch (error) {
+            console.error('Erro ao obter sala:', error);
+            alert('Consulta agendada, mas ocorreu um erro ao gerar a sala virtual.');
+            window.location.href = '/index.html';
+          }
         } catch (error) {
           console.error('Erro na requisição:', error);
           alert('Erro de conexão com o servidor. Verifique se o backend está rodando.');
         }
       });
-    } else {
-      console.error('Formulário não encontrado!');
-    }
+    })();
   </script>
 </body>
 

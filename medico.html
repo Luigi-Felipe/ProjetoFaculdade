@@ -119,6 +119,15 @@
         </div>
         <button id="enviar-btn">Enviar Exame</button>
         <button id="logout-btn" style="background: #ccc; margin-top: 10px;">Sair</button>
+
+        <!-- Nova seção: Entrar em consulta virtual -->
+        <hr style="margin: 20px 0;">
+        <h3>Entrar em consulta virtual</h3>
+        <div class="form-group">
+          <label for="sala-consulta">Código da sala (ex: consulta-123)</label>
+          <input type="text" id="sala-consulta" placeholder="consulta-123">
+        </div>
+        <button id="entrar-consulta-btn">Entrar na consulta</button>
       </div>
     </div>
   </main>
@@ -155,7 +164,7 @@
   </footer>
 
   <script>
-    const API_BASE_URL = ''; 
+    const API_BASE_URL = '';  // <-- ajuste aqui se necessário
 
     // Elementos
     const loginArea = document.getElementById('login-area');
@@ -283,6 +292,17 @@
       } catch (error) {
         console.error('Erro no logout:', error);
       }
+    });
+
+    // NOVO: Entrar na consulta virtual
+    document.getElementById('entrar-consulta-btn').addEventListener('click', () => {
+      const sala = document.getElementById('sala-consulta').value.trim();
+      if (!sala) {
+        alert('Informe o código da sala');
+        return;
+      }
+      // Abre em nova aba para não perder o dashboard
+      window.open(`consulta.html?sala=${encodeURIComponent(sala)}`, '_blank');
     });
   </script>
 </body>

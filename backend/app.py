@@ -1,7 +1,6 @@
 import os
 import re
 import threading
-import sqlite3
 import time
 from datetime import datetime
 from flask import Flask, request, jsonify, send_from_directory, session  
@@ -19,70 +18,24 @@ import webbrowser
 
 load_dotenv()
 
-# Define o diretório base do projeto (um nível acima da pasta /backend)
-# Isso garante que o Flask encontre os arquivos estáticos independente de onde o script é iniciado.
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-SUPABASE_URL = os.getenv('SUPABASE_URL')
-SUPABASE_KEY = os.getenv('SUPABASE_KEY')
-
-if not SUPABASE_URL or not SUPABASE_KEY:
-    print("ERRO: SUPABASE_URL ou SUPABASE_KEY não encontradas no arquivo .env")
-    # Não encerra o app aqui para permitir que o Flask suba e mostre erros nas rotas
-
 app = Flask(__name__, static_folder=None)  
 app.secret_key = os.getenv('SECRET_KEY', 'dev-key-123')  
-CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": ["http://localhost:8000", "http://127.0.0.1:8000", "http://localhost:5000", "http://127.0.0.1:5000"]}}) 
-
+CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": ["http://127.0.0.1:5000", "http://localhost:5000"]}})
 app.config.update(
-    SESSION_COOKIE_SAMESITE=None, # Permite envio em contextos cross-site locais
-    SESSION_COOKIE_SECURE=False,  # Obrigatório False para HTTP puro
-    SESSION_COOKIE_HTTPONLY=True,
-    SESSION_COOKIE_NAME='session_consulta'
+    SESSION_COOKIE_SAMESITE='Lax',
+    SESSION_COOKIE_SECURE=False,   # Como é localhost (HTTP), não usamos HTTPS
+    SESSION_COOKIE_HTTPONLY=True
 )
-
-supabase: Client = None
-if SUPABASE_URL and SUPABASE_KEY:
-    supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-else:
-    print("AVISO: Cliente Supabase não inicializado.")
+supabase: Client = create_client(
+    os.getenv('SUPABASE_URL'),
+    os.getenv('SUPABASE_KEY')
+)
 
 SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
 SMTP_PORT = int(os.getenv('SMTP_PORT', 587))
 SMTP_USER = os.getenv('SMTP_USER')
 SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
 cpf_validator = CPF()
-
-# ==================== Configuração SQLite (Banco Local/Temporário) ====================
-DB_SQLITE = os.path.join(os.path.dirname(__file__), 'triagens_temp.db')
-
-def get_db_connection():
-    conn = sqlite3.connect(DB_SQLITE)
-    conn.row_factory = sqlite3.Row  # Permite acessar colunas pelo nome
-    return conn
-
-def init_sqlite_db():
-    """Cria a tabela de triagens localmente se não existir"""
-    conn = get_db_connection()
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS triagens (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_agendamento INTEGER NOT NULL,
-            motivo TEXT,
-            nivel_dor INTEGER,
-            tempo_sintomas TEXT,
-            historico_alergias TEXT,
-            medicacao_continua TEXT,
-            doencas_preexistentes TEXT,
-            sintomas_novos TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-# Inicializa o banco local
-init_sqlite_db()
 
 # ==================== Funções de validação ====================
 def validar_cpf(numero: str) -> bool:
@@ -223,106 +176,16 @@ def agendar_consulta():
     try:
         resposta = supabase.table('agendamentos').insert(novo_agendamento).execute()
         if resposta.data:
-            return jsonify({'mensagem': 'Consulta agendada com sucesso'}), 201
+            agendamento_id = resposta.data[0]['id']
+            return jsonify({
+                'mensagem': 'Consulta agendada com sucesso',
+                'id': agendamento_id
+            }), 201
         else:
             return jsonify({'erro': 'Erro ao agendar'}), 500
     except Exception as e:
         return jsonify({'erro': str(e)}), 500
 
-@app.route('/api/triagens', methods=['POST'])
-def salvar_triagem():
-    """Salva os dados da triagem vinculados a um agendamento"""
-    dados = request.json
-    agendamento_id = dados.get('agendamento_id')
-
-    if not agendamento_id:
-        return jsonify({'erro': 'ID do agendamento é obrigatório'}), 400
-
-    motivo = dados.get('motivo')
-    nivel_dor = int(dados.get('nivel_dor', 0))
-    tempo_sintomas = dados.get('tempo_sintomas')
-    historico_alergias = dados.get('alergia_especifica') if dados.get('tem_alergia') == 'Sim' else 'Nenhuma'
-    medicacao_continua = dados.get('medicacao_continua')
-    doencas_preexistentes = ",".join(dados.get('doencas', []))
-    sintomas_novos = dados.get('sintomas_novos')
-
-    try:
-        conn = get_db_connection()
-        conn.execute('''
-            INSERT INTO triagens (id_agendamento, motivo, nivel_dor, tempo_sintomas, 
-                                 historico_alergias, medicacao_continua, 
-                                 doencas_preexistentes, sintomas_novos)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (agendamento_id, motivo, nivel_dor, tempo_sintomas, 
-              historico_alergias, medicacao_continua, 
-              doencas_preexistentes, sintomas_novos))
-        conn.commit()
-        conn.close()
-        return jsonify({'mensagem': 'Triagem salva com sucesso no SQLite local'}), 201
-    except Exception as e:
-        return jsonify({'erro': f'Erro ao salvar no SQLite: {str(e)}'}), 500
-
-@app.route('/api/autorizar-video/<int:agendamento_id>', methods=['GET'])
-def autorizar_video(agendamento_id):
-    """Verifica no SQLite se a triagem foi feita antes de liberar o acesso"""
-    try:
-        conn = get_db_connection()
-        triagem = conn.execute('SELECT id FROM triagens WHERE id_agendamento = ?', (agendamento_id,)).fetchone()
-        conn.close()
-
-        if triagem:
-            # Redirecionamos para uma página interna que contém o IFrame do Jitsi.
-            # Isso garante que o controle do encerramento e o retorno para a área logada funcionem sempre.
-            url_video = f"/video_chamada.html?room=Telemedicina_Consulta_{agendamento_id}"
-            return jsonify({'autorizado': True, 'url_video': url_video})
-        
-        return jsonify({'autorizado': False, 'mensagem': 'Triagem pendente'}), 403
-    except Exception as e:
-        return jsonify({'erro': str(e)}), 500
-
-@app.route('/api/triagens/resumo/<int:agendamento_id>', methods=['GET'])
-def buscar_resumo_triagem(agendamento_id):
-    """Retorna o resumo clínico do SQLite para o médico visualizar"""
-    if not session.get('medico_logado'):
-        return jsonify({'erro': 'Não autorizado'}), 401
-    
-    try:
-        conn = get_db_connection()
-        res = conn.execute('SELECT * FROM triagens WHERE id_agendamento = ?', (agendamento_id,)).fetchone()
-        conn.close()
-
-        if res:
-            return jsonify(dict(res))
-        return jsonify({'erro': 'Triagem não encontrada'}), 404
-    except Exception as e:
-        return jsonify({'erro': str(e)}), 500
-
-@app.route('/api/pacientes/login', methods=['POST'])
-def paciente_login_api():
-    """Simulação de login do paciente - aceita qualquer credencial"""
-    # Como solicitado, aceitamos qualquer parâmetro
-    session['paciente_logado'] = True
-    return jsonify({'success': True})
-
-@app.route('/api/pacientes/logout', methods=['POST'])
-def paciente_logout_api():
-    """Remove a sessão do paciente e limpa dados temporários de triagem"""
-    session.pop('paciente_logado', None)
-    try:
-        conn = get_db_connection()
-        conn.execute('DELETE FROM triagens')
-        conn.commit()
-        conn.close()
-    except Exception as e:
-        print(f"Erro ao limpar triagens no logout: {e}")
-    return jsonify({'success': True})
-
-@app.route('/api/pacientes/session', methods=['GET'])
-def paciente_session_api():
-    """Verifica se o paciente está logado"""
-    return jsonify({
-        'logado': session.get('paciente_logado', False)
-    })
 
 @app.route('/api/prontuario/<int:paciente_id>', methods=['GET', 'PUT'])
 def gerenciar_prontuario(paciente_id):
@@ -424,15 +287,8 @@ def medico_login():
 
 @app.route('/api/medicos/logout', methods=['POST'])
 def medico_logout():
-    """Logout do médico e limpa dados temporários de triagem"""
+    """Logout do médico"""
     session.pop('medico_logado', None)
-    try:
-        conn = get_db_connection()
-        conn.execute('DELETE FROM triagens')
-        conn.commit()
-        conn.close()
-    except Exception as e:
-        print(f"Erro ao limpar triagens no logout: {e}")
     return jsonify({'success': True})
 
 
@@ -490,17 +346,75 @@ def enviar_exame():
         return jsonify({'success': True, 'message': 'E-mail enviado com sucesso'})
     except Exception as e:
         return jsonify({'erro': f'Falha ao enviar e-mail: {str(e)}'}), 500
+# ==================== Rotas video chamada ====================
 
+@app.route('/api/agendamentos/<int:agendamento_id>/sala', methods=['GET'])
+def obter_sala_virtual(agendamento_id):
+    # Verifica se o agendamento existe
+    agendamento = supabase.table('agendamentos').select('*').eq('id', agendamento_id).execute()
+    if not agendamento.data:
+        return jsonify({'erro': 'Agendamento não encontrado'}), 404
+
+    # Opcional: verificar se quem acessa é o paciente ou médico (usando sessão)
+    # Aqui você pode adicionar lógica de autorização, se desejar.
+
+    nome_sala = f"consulta-{agendamento_id}"
+    link = f"https://meet.jit.si/{nome_sala}"
+
+    return jsonify({
+        'sala': nome_sala,
+        'link': link
+    })
+# ==================== Rotas login paciente ====================
+
+@app.route('/api/pacientes/login', methods=['POST'])
+def paciente_login():
+    data = request.json
+    cpf = data.get('cpf')
+    email = data.get('email')
+
+    if not cpf or not email:
+        return jsonify({'erro': 'CPF e e-mail são obrigatórios'}), 400
+
+    # Limpa CPF
+    cpf_limpo = ''.join(filter(str.isdigit, cpf))
+    email_limpo = email.strip().lower()
+
+    # Busca paciente
+    paciente = supabase.table('pacientes') \
+        .select('id, nome, email, cpf') \
+        .eq('cpf', cpf_limpo) \
+        .eq('email', email_limpo) \
+        .execute()
+
+    if not paciente.data:
+        return jsonify({'erro': 'Paciente não encontrado ou dados incorretos'}), 401
+
+    paciente = paciente.data[0]
+    session['paciente_logado'] = {
+        'id': paciente['id'],
+        'nome': paciente['nome'],
+        'email': paciente['email']
+    }
+    return jsonify({'mensagem': 'Login realizado com sucesso', 'id': paciente['id']})
+
+@app.route('/api/pacientes/sessao', methods=['GET'])
+def verificar_sessao_paciente():
+    paciente = session.get('paciente_logado')
+    if not paciente:
+        return jsonify({'erro': 'Não autenticado'}), 401
+    return jsonify(paciente)
+
+@app.route('/api/pacientes/logout', methods=['POST'])
+def paciente_logout():
+    session.pop('paciente_logado', None)
+    return jsonify({'mensagem': 'Logout realizado'})
 # ==================== Rotas para servir arquivos estáticos e HTML ====================
 
 @app.route('/')
 def serve_index():
     """Serve a página inicial index.html"""
-    if os.path.exists(os.path.join(BASE_DIR, 'index.html')):
-        return send_from_directory(BASE_DIR, 'index.html')
-    else:
-        print(f"ERRO: index.html não encontrado em {BASE_DIR}")
-        return jsonify({'erro': f'Arquivo index.html não encontrado na raiz do projeto ({BASE_DIR})'}), 404
+    return send_from_directory(os.getcwd(), 'index.html')
 
 @app.route('/<path:filename>')
 def serve_static_or_html(filename):
@@ -513,20 +427,22 @@ def serve_static_or_html(filename):
         return jsonify({'erro': 'Rota não encontrada'}), 404
 
     # Caminho completo para o arquivo solicitado
-    filepath = os.path.join(BASE_DIR, filename)
+    filepath = os.path.join(os.getcwd(), filename)
 
     # Se for um diretório, tenta servir um index.html dentro dele (opcional)
     if os.path.isdir(filepath):
         index_inside = os.path.join(filepath, 'index.html')
         if os.path.isfile(index_inside):
-            return send_from_directory(directory=filepath, path='index.html')
+            return send_from_directory(filepath, 'index.html')
         # Se não houver index, retorna 404
         return jsonify({'erro': 'Arquivo não encontrado'}), 404
 
     # Se for um arquivo, tenta servir
     if os.path.isfile(filepath):
         # Extrai o diretório e o nome do arquivo
-        return send_from_directory(BASE_DIR, filename)
+        directory = os.path.dirname(filepath)
+        basename = os.path.basename(filepath)
+        return send_from_directory(directory, basename)
 
     # Se não encontrou, retorna 404
     return jsonify({'erro': 'Arquivo não encontrado'}), 404
@@ -534,7 +450,7 @@ def serve_static_or_html(filename):
 # ==================== Função para abrir o navegador ====================
 def abrir_navegador():
     time.sleep(1.5)  # Aguarda o servidor iniciar
-    webbrowser.open('http://localhost:5000')
+    webbrowser.open('http://127.0.0.1:5000')
 
 if __name__ == '__main__':
     # Inicia a thread que abrirá o navegador
